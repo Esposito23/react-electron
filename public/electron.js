@@ -8,7 +8,10 @@ let mainWindow;
 
 function createWindow() {
 
-    mainWindow = new BrowserWindow({ fullscreen : 'true'});
+    // mainWindow = new BrowserWindow({ fullscreen : 'true'});
+    mainWindow = new BrowserWindow({alwaysOnTop: true, kiosk:true});
+
+
 
     mainWindow.removeMenu();
 
