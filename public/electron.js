@@ -9,7 +9,8 @@ let mainWindow;
 function createWindow() {
 
     // mainWindow = new BrowserWindow({ alwaysOnTop: true});
-    mainWindow = new BrowserWindow({ kiosk: true });
+    // mainWindow = new BrowserWindow({ kiosk: true });
+    mainWindow = new BrowserWindow({ });
 
     mainWindow.removeMenu();
 

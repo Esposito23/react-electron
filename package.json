@@ -20,6 +20,8 @@
     "electron-is-dev": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "wait-on": "^5.2.1",
     "web-vitals": "^1.0.1"
@@ -30,7 +32,9 @@
     "electron-build": "electron-builder",
     "release": "yarn react-build && electron-builder --publish=always",
     "build": "yarn react-build && yarn electron-build",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start_electron_react": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "start_flask": "cd api && flask run --no-debugger",
+    "prova": "concurrently \"yarn start_flask\" \"yarn start_electron_react\""
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +53,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
