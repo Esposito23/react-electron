@@ -8,10 +8,8 @@ let mainWindow;
 
 function createWindow() {
 
-    // mainWindow = new BrowserWindow({ fullscreen : 'true'});
-    mainWindow = new BrowserWindow({alwaysOnTop: true, kiosk:true});
-
-
+    // mainWindow = new BrowserWindow({ alwaysOnTop: true});
+    mainWindow = new BrowserWindow({ kiosk: true });
 
     mainWindow.removeMenu();
 
@@ -24,21 +22,13 @@ function createWindow() {
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
-
     if (process.platform !== "darwin") {
-
         app.quit();
-
     }
-
 });
 
 app.on("activate", () => {
-
     if (mainWindow === null) {
-
         createWindow();
-
     }
-
 });
