@@ -1,6 +1,5 @@
 import revpimodio2
 
-
 def init(RPI):
     global rpi
     rpi= RPI

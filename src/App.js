@@ -28,14 +28,13 @@ export default class App extends Component {
     return (
       <div className='App-header'>
         <p>{this.state.msg}</p>
+        <row>
         <button onClick={this.ComandoOn}>Accendi !</button>
-        <button onClick={this.ComandoOff}>Spegni !</button>
+        <button onClick={this.ComandoOff}>Spegni</button>
+        </row>
       </div>
+
     )
   }
 }
 
-
-
-
-// imp

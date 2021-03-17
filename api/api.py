@@ -14,11 +14,9 @@ def init_digi():
     device.open()
     return(device)
 
-
-
 @app.route('/motorOn')
 def motorOn():
-    start_motor(15)
+    start_motor(25)
     return jsonify({'m':'motore acceso'})
 
 @app.route('/motorOff')
