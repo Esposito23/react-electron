@@ -33,7 +33,7 @@
     "release": "yarn react-build && electron-builder --publish=always",
     "build": "yarn react-build && yarn electron-build",
     "start_electron_react": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "start_flask": "cd api && flask run --no-debugger",
+    "start_flask": "cd api && export FLASK_APP=api.py && flask run",
     "prova": "concurrently \"yarn start_flask\" \"yarn start_electron_react\""
   },
   "eslintConfig": {

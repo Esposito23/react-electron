@@ -1,18 +1,36 @@
 import time
-from flask import Flask
-
+from flask import Flask, request, jsonify
+from tools import port
 from digi.xbee.devices import XBeeDevice
+import revpimodio2
+from motor import start_motor,init,stop_motor
 
 
 app = Flask(__name__)
 
 
+def init_digi():
+    device = XBeeDevice(port(), 9600)
+    device.open()
+    return(device)
 
-@app.route('/comando')
-def comando():
-    print('Comando inoltrato',flush=True)
-    return {'m': "Comando inoltrato"}
 
 
-# if __name__ == "__main__":
-#     app.run(debug = True, host='192.168.1.129',Port=80)
+@app.route('/motorOn')
+def motorOn():
+    start_motor(15)
+    return jsonify({'m':'motore acceso'})
+
+@app.route('/motorOff')
+def motorOff():
+    stop_motor()
+    return jsonify({'m':'motore spento'})
+
+
+# device=init_digi()
+rpi = revpimodio2.RevPiModIO(autorefresh=True)
+rpi.mainloop(blocking=False)
+init(rpi)
+
+
+

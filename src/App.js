@@ -9,8 +9,15 @@ export default class App extends Component {
       msg: 'Clicca per il comando'
     }
   }
-  Comando = () => {
-    fetch('/comando')
+  ComandoOn = () => {
+    fetch('/motorOn')
+      .then(res => res.json())
+      .then(mess => {
+        this.setState({ msg: mess.m });
+      })
+  }
+  ComandoOff = () => {
+    fetch('/motorOff')
       .then(res => res.json())
       .then(mess => {
         this.setState({ msg: mess.m });
@@ -21,7 +28,8 @@ export default class App extends Component {
     return (
       <div className='App-header'>
         <p>{this.state.msg}</p>
-        <button onClick={this.Comando}>Vai !</button>
+        <button onClick={this.ComandoOn}>Accendi !</button>
+        <button onClick={this.ComandoOff}>Spegni !</button>
       </div>
     )
   }
