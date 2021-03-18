@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from tools import port
 from digi.xbee.devices import XBeeDevice
 import revpimodio2
-from motor import start_motor,init,stop_motor
+from moduli import rotante
 
 
 app = Flask(__name__)
@@ -14,21 +14,45 @@ def init_digi():
     device.open()
     return(device)
 
+
+# Motore rotante
+# ---------------------------------------------------------------
 @app.route('/motorOn')
 def motorOn():
-    start_motor(25)
-    return jsonify({'m':'motore acceso'})
+    rotante.start_motor(12)
+    return jsonify({'stato':'motore acceso'})
 
 @app.route('/motorOff')
 def motorOff():
-    stop_motor()
-    return jsonify({'m':'motore spento'})
+    rotante.stop_motor()
+    return jsonify({'stato':'motore spento'})
 
+@app.route('/monitorOn')
+def monitorOn():
+    rotante.monitor_on()
+    return jsonify({'monitor': 'Monitor Acceso'})
+
+@app.route('/monitorOff')
+def monitorOff():
+    rotante.monitor_off()
+    return jsonify({'monitor': 'Monitor Spento'})
+
+@app.route('/monitorLast')
+def speedLast():
+    last=rotante.last()
+    return jsonify({'speed': 'Ultima lettura di velocità instantanea : '+str(last) })
+
+@app.route('/monitorMean')
+def speedMean():
+    mean=rotante.average()
+    return jsonify({'speed':'Ultima lettura di velocità media : '+ str(mean)})
+
+# ---------------------------------------------------------------
 
 # device=init_digi()
 rpi = revpimodio2.RevPiModIO(autorefresh=True)
 rpi.mainloop(blocking=False)
-init(rpi)
+rotante.init(rpi)
 
 
 
