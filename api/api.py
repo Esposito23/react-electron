@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from tools import port
 from digi.xbee.devices import XBeeDevice
 import revpimodio2
-from moduli import rotante
+from moduli import rotante , lineare
 
 
 app = Flask(__name__)
@@ -49,10 +49,32 @@ def speedMean():
 
 # ---------------------------------------------------------------
 
+# Motore Lineare
+# ---------------------------------------------------------------
+@app.route('/linearHome')
+def linearHome():
+    lineare.home()
+    return jsonify({'stato' : 'Il motore si sta muovendo in Home'})
+
+@app.route('/linearAway')
+def linearAway():
+    lineare.away()
+    return jsonify({'stato' : 'Il motore si sta muovendo in Away'})
+
+@app.route('/linearStop')
+def linearStop():
+    lineare.stop()
+    return jsonify({'stato' : 'Motore Bloccato Manualmente'})
+
+# ---------------------------------------------------------------
+
+
+
 # device=init_digi()
 rpi = revpimodio2.RevPiModIO(autorefresh=True)
 rpi.mainloop(blocking=False)
 rotante.init(rpi)
+lineare.init(rpi)
 
 
 

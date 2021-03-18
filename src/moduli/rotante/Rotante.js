@@ -57,6 +57,7 @@ class Rotante extends Component {
   render() {
     return (
       <div className='App-header'>
+        <h1>Motore Rotante</h1>
         <p>{this.state.msg}</p>
         <row>
         <button onClick={this.ComandoOn}>Accendi</button>
