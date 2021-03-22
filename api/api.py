@@ -1,9 +1,9 @@
 import time
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, after_this_request
 from tools import port
 from digi.xbee.devices import XBeeDevice
 import revpimodio2
-from moduli import rotante , lineare
+from moduli import rotante , lineare, digixbeeusb,pressione
 
 
 app = Flask(__name__)
@@ -68,11 +68,57 @@ def linearStop():
 
 # ---------------------------------------------------------------
 
+# Digi<--> Xbee  (mancano i comandi di set ecc)
+# ---------------------------------------------------------------
+@app.route('/xbeeLast')
+def lastXbee():
+    last=digixbeeusb.last()
+    return jsonify({'last' : last})
+
+@app.route('/xbeeCheck')
+def checkXbee():
+    digixbeeusb.check()
+    return jsonify({'info' : 'Inviato processo di check connessione'})
+
+@app.route('/xbeeReset')
+def resetXbee():
+    digixbeeusb.reset()
+    return jsonify({'info' : 'Reset Xbee, attendi qualche secondo'})
+# ---------------------------------------------------------------
 
 
-# device=init_digi()
+# Sensore di pressione
+# ---------------------------------------------------------------
+@app.route('/pressOff')
+def pressOff():
+    pressione.monitor_off()
+    return jsonify({'monitor' : 'Monitoraggio pressione bloccato'})
+
+@app.route('/pressOn')
+def pressOn():
+    pressione.monitor_on()
+    return jsonify({'monitor' : 'Monitoraggio pressione iniziato'})
+
+@app.route('/pressLast')
+def pressLast():
+    pressione.last()
+    return jsonify({'monitor' : 'Richiesta ultima lettura'})
+
+@app.route('/pressAvg')
+def pressAvg():
+    pressione.average()
+    return jsonify({'monitor' : 'Richiesta ultima media di pressione'})
+
+
+# ---------------------------------------------------------------
+
+
+
+device=init_digi()
 rpi = revpimodio2.RevPiModIO(autorefresh=True)
 rpi.mainloop(blocking=False)
+digixbeeusb.init(device)
+pressione.init(rpi)
 rotante.init(rpi)
 lineare.init(rpi)
 
