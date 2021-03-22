@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, after_this_request
 from tools import port
 from digi.xbee.devices import XBeeDevice
 import revpimodio2
-from moduli import rotante , lineare, digixbeeusb,pressione
+from moduli import rotante , lineare, digixbeeusb,pressione,lpump
 
 
 app = Flask(__name__)
@@ -113,6 +113,27 @@ def pressAvg():
 # ---------------------------------------------------------------
 
 
+# Lpump
+# ---------------------------------------------------------------
+@app.route('/lPumpOff')
+def lpumpOff():
+    lpump.pumpOff()
+    return jsonify({'state' : 'Pompa spenta'})
+
+@app.route('/lPumpOn')
+def lpumpOn():
+    lpump.pumpOn()
+    return jsonify({'state' : 'Pompa Accesa'})
+
+@app.route('/lPumpSec')
+def lpumpSec():
+    lpump.attiva(float(20))
+    return jsonify({'state' : 'Erogazione di 20 ml'})
+
+
+# ---------------------------------------------------------------
+
+
 
 device=init_digi()
 rpi = revpimodio2.RevPiModIO(autorefresh=True)
@@ -121,6 +142,7 @@ digixbeeusb.init(device)
 pressione.init(rpi)
 rotante.init(rpi)
 lineare.init(rpi)
+lpump.init(rpi)
 
 
 

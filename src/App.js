@@ -4,6 +4,7 @@ import Rotante from './moduli/rotante/Rotante'
 import Lineare from './moduli/Lineare/Lineare'
 import Xbee from './moduli/XbeeUsb/Xbee'
 import Pressione from './moduli/Pressione/Pressione'
+import Lpump from './moduli/Lpump/Lpump'
 
 
 export default class App extends Component {
@@ -14,6 +15,7 @@ export default class App extends Component {
         <Lineare />
         <Xbee />
         <Pressione />
+        <Lpump />
       </div>
 
     )
