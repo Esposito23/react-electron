@@ -6,7 +6,7 @@ class Lpump extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      state: 'Clicca per gestire Lpump',
+      state: 'Clicca per gestire Lpump'
     }
   }
   LPumpOff = () => {

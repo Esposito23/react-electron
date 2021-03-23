@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, after_this_request
 from tools import port
 from digi.xbee.devices import XBeeDevice
 import revpimodio2
-from moduli import rotante , lineare, digixbeeusb,pressione,lpump
+from moduli import rotante , lineare, digixbeeusb,pressione,lpump, valvole
 
 
 app = Flask(__name__)
@@ -130,9 +130,27 @@ def lpumpSec():
     lpump.attiva(float(20))
     return jsonify({'state' : 'Erogazione di 20 ml'})
 
-
 # ---------------------------------------------------------------
 
+# Valvole
+# ---------------------------------------------------------------
+@app.route('/valvState')
+def valvState():
+    state=valvole.get_state()
+    return jsonify({'state' : state})
+
+@app.route('/valvGet')
+def valvGet():
+    valv= valvole.get_valves_state("L1")
+    return jsonify({'state' : valv})
+
+@app.route('/valvSet')
+def valvSet():
+    setValv = valvole.set_state('L1','1')
+    return jsonify({'state', setValv})
+
+    
+# ---------------------------------------------------------------
 
 
 device=init_digi()
@@ -143,6 +161,7 @@ pressione.init(rpi)
 rotante.init(rpi)
 lineare.init(rpi)
 lpump.init(rpi)
+valvole.init(rpi)
 
 
 

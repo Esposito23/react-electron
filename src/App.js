@@ -5,6 +5,7 @@ import Lineare from './moduli/Lineare/Lineare'
 import Xbee from './moduli/XbeeUsb/Xbee'
 import Pressione from './moduli/Pressione/Pressione'
 import Lpump from './moduli/Lpump/Lpump'
+import Valvole from './moduli/Valvole/Valvole'
 
 
 export default class App extends Component {
@@ -16,6 +17,7 @@ export default class App extends Component {
         <Xbee />
         <Pressione />
         <Lpump />
+        <Valvole />
       </div>
 
     )
